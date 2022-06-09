@@ -107,8 +107,6 @@ impl<T :Copy> Queue <T>{
             self.front += 1;
             Some(temp)
         }
-        
-       
     }
 
     // isFull() returns true if queue is full else false
@@ -162,12 +160,6 @@ impl<T :Copy> Queue <T>{
         }
 
     }
-    
-
-
-   
-
-
 }
 
 // implement the iterator trait for the queue struct to iterate over the queue elements in FIFO order. 
