@@ -3,10 +3,6 @@
 // Language: rust
 // Path: src/queue.rs
 
-// twitter api implimentation in rust
-// by (Github) @t-el  on jun 9, 2022
-// Language: rust
-// Path: src/twitter.rs
 
 
 
