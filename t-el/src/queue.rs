@@ -2,7 +2,7 @@
 // by (Github) @t-el  on jun 9, 2022
 //Language: rust
 // Path: src/queue.rs
-
+#![allow(dead_code, unused_variables)]
 
 
 
@@ -121,7 +121,7 @@ impl<T :Copy> Queue <T>{
     /// assert_eq!(q.isfull(), true);
     /// ```
 
-    pub fn isfull(&self) -> bool {
+    pub fn is_full(&self) -> bool {
         if self.arr.len() == self.size {
             return true;
         }
@@ -141,10 +141,12 @@ impl<T :Copy> Queue <T>{
     /// assert_eq!(q.is_empty(), false);
     /// ```
 
-    pub fn isempty(&self) -> bool {
+    pub fn is_empty(&self) -> bool {
         self.front == self.rear ||  self.front == -1
+        // or self.arr.is_empty()
     }
     
+
   
     /// peek() returns the element at the front of the queue without removing it.
     /// peek() returns None if the queue is empty.
@@ -199,7 +201,7 @@ impl<T :Copy> Queue <T>{
     
     
     pub fn clear(&mut self) -> Option<()> {
-        if self.isempty(){
+        if self.is_empty(){
             None
         }else{
             self.front = -1;
@@ -221,7 +223,7 @@ impl<T :Copy> Queue <T>{
    /// ```
 
     pub fn len(&self) -> usize {
-        if self.isempty() {
+        if self.is_empty() {
             0
         }else{
             (self.rear - self.front) as usize
@@ -235,7 +237,7 @@ impl<T :Copy> Queue <T>{
 impl<T : Copy> Iterator for Queue<T> {
     type Item = T;
     fn next(&mut self) -> Option<Self::Item> {
-        if self.isempty() {
+        if self.is_empty() {
             None
         }else{
             let temp = self.arr[self.front as usize];
@@ -255,7 +257,7 @@ mod tests {
 
     #[test]
     fn test_new() {
-    let mut list:Queue<u32> =  Queue::new(3);
+    let list:Queue<u32> =  Queue::new(3);
     assert_eq!(list.len() ,0);
     assert_eq!(list.size ,3);
     assert_eq!(list.front ,-1);
@@ -271,7 +273,7 @@ mod tests {
     assert_eq!(list.enqueue(2).unwrap(),2); // return the element 2
     assert_eq!(list.enqueue(2).is_none(),true); // return None if the queue is full
     assert_eq!(list.len() ,3);
-    assert_eq!(list.isfull(),true);
+    assert_eq!(list.is_full(),true);
    
     }
 
@@ -286,7 +288,7 @@ mod tests {
     assert_eq!(list.dequeue().unwrap(),2); // return the element 2
     //assert_eq!(list.dequeue().is_none(),true); // return None if the queue is empty
     assert_eq!(list.len() ,0);
-    assert_eq!(list.isempty(),true);
+    assert_eq!(list.is_empty(),true);
    
     }
    
@@ -294,26 +296,26 @@ mod tests {
     #[test]
     fn test_isempty() {
         let mut list:Queue<u32> =  Queue::new(3);
-        assert_eq!(list.isempty(),true);
+        assert_eq!(list.is_empty(),true);
         list.enqueue(2); // return the element 2
-        assert_eq!(list.isempty(),false);
+        assert_eq!(list.is_empty(),false);
         list.dequeue(); // return the element 2
-        assert_eq!(list.isempty(),true);
+        assert_eq!(list.is_empty(),true);
        
     }
 
     #[test]
     fn test_isfull() {
         let mut list:Queue<u32> =  Queue::new(3);
-        assert_eq!(list.isfull(),false); // queue is not full
+        assert_eq!(list.is_full(),false); // queue is not full
         list.enqueue(2); // returns Some(2) if the queue is not full
-        assert_eq!(list.isfull(),false);    
+        assert_eq!(list.is_full(),false);    
     }
         
      
     #[test]
     fn test_capacity() {
-    let mut list :Queue<i8> = Queue::new(3);
+    let list :Queue<i8> = Queue::new(3);
     assert_eq!(list.capacity(),3);
     }
 
