@@ -3,7 +3,7 @@
 // Language: rust
 // Path: src/stack.rs
 
-
+#![allow(dead_code, unused_variables)]
 
 #[derive(Debug)]
 #[derive(PartialEq)]
@@ -22,8 +22,26 @@ impl<T :Copy> Stack <T>{
       }
   }
 
-// push() add  the element from the top of the stack and returns it.
-// push() returns None if the stack is full.
+/// push() adds the element to the top of the stack and returns it.
+/// push() returns None if the stack is full.
+/// # example
+/// ```
+/// let mut s = Stack::new(5);
+/// assert_eq!(s.push(1), Some(1));
+/// assert_eq!(s.push(2), Some(2));
+/// assert_eq!(s.push(3), Some(3));
+/// ```
+/// # Panics
+/// Panics if the stack is full.
+/// # Example
+/// ```
+/// let mut s = Stack::new(5);
+/// assert_eq!(s.push(1), Some(1));
+/// assert_eq!(s.push(2), Some(2));
+/// assert_eq!(s.push(3), Some(3));
+/// assert_eq!(s.push(4), Some(4));
+/// assert_eq!(s.push(5), None);
+/// ```
 
     pub fn push(&mut self,element : T) -> Option<T> {
         if self.arr.len() == self.size {
@@ -34,54 +52,61 @@ impl<T :Copy> Stack <T>{
 
     }
 
-    // push example
-    // ---------------------------------
-    //  0 1 2 3 4 5 6 7 8 9
-    
-    // push(1)
-    // -----------------------------------
-    //  0 1 2 3 4 5 6 7 8 9
-    //  |1| | | | | | | | |
-    
-    // push(3)
-    // ----------------------------------
-    //  0 1 2 3 4 5 6 7 8 9
-    //  |1|3| | | | | | | |
-
-    // push(5)
-    // ----------------------------------
-    //  0 1 2 3 4 5 6 7 8 9
-    //  |1|3|5| | | | | | | |
 
 
- // pop() removes the element from the top of the stack and returns it.
- // pop() returns None if the stack is empty.
- 
+ ///  pop() removes the element from the top of the stack and returns it.
+ /// pop() returns None if the stack is empty.
+ /// # example
+ /// ```
+ /// let mut s = Stack::new(5);
+ /// assert_eq!(s.push(1), Some(1));
+ /// assert_eq!(s.push(2), Some(2));
+ /// assert_eq!(s.push(3), Some(3));
+ /// assert_eq!(s.pop(), Some(3));
+ /// assert_eq!(s.pop(), Some(2));
+ /// assert_eq!(s.pop(), Some(1));
+ /// assert_eq!(s.pop(), None);
+ /// ```
+ /// # Panics
+ /// Panics if the stack is empty.
+ /// # Example
+ /// ```
+ /// let mut s = Stack::new(5);
+ /// assert_eq!(s.push(1), Some(1));
+ /// assert_eq!(s.push(2), Some(2));
+ /// assert_eq!(s.push(3), Some(3));
+ /// assert_eq!(s.push(4), Some(4));
+ /// assert_eq!(s.push(5), None);
+ /// ```
     pub fn pop(&mut self) -> Option<T> {
-        if self.arr.is_empty() {
+        if self.arr.len() == 0 {
             return None;
         }
-        Some(self.arr.pop().unwrap())
-    }
-    
-  // pop example
-    // ---------------------------------
-    //  0 1 2 3 4 5 6 7 8 9
-    //  |1|3|5| | | | | | | |
-    // pop()    
-    // -----------------------------------
-    //  0 1 2 3 4 5 6 7 8 9
-    //  |1|3| | | | | | | | |
-    // pop()
-    // -----------------------------------
-    //  0 1 2 3 4 5 6 7 8 9
-    //  |1| | | | | | | | | |
- 
+        let element = self.arr.pop();
+        Some(element.unwrap())
 
-    
-  
-// peek() returns the element from the top of the stack without removing it.
-// peek() returns None if the stack is empty.
+    }
+ 
+    /// peek() returns the element at the top of the stack without removing it.
+    /// peek() returns None if the stack is empty.
+    /// # example
+    /// ```
+    /// let mut s = Stack::new(5);
+    /// assert_eq!(s.push(1), Some(1));
+    /// assert_eq!(s.push(2), Some(2));
+    /// assert_eq!(s.push(3), Some(3));
+    /// assert_eq!(s.peek(), Some(3));
+    /// ```
+    /// # Panics
+    /// Panics if the stack is empty.
+    /// # Example
+    /// ```
+    /// let mut s = Stack::new(5);
+    /// assert_eq!(s.push(1), Some(1));
+    /// assert_eq!(s.push(2), Some(2));
+    /// assert_eq!(s.push(3), Some(3));
+    /// assert_eq!(s.peek(), Some(3));
+    /// ```
 
     pub fn peek(&self) -> Option<&T> {
         if self.arr.is_empty() {
@@ -90,17 +115,34 @@ impl<T :Copy> Stack <T>{
         Some(&self.arr[self.arr.len()-1])
     }
 
-    // peek example
-    // ---------------------------------
-    //  0 1 2 3 4 5 6 7 8 9
-    //  |1|3|5| | | | | | | |
-    // peek()
-    // returns Some(&5)
 
+/// peek_at() returns the element with the given index from the top of the stack without removing it.
+/// peek_at() returns None if the stack is empty or if the index is out of bounds.
+/// # example
+/// ```
+/// let mut s = Stack::new(5);
+/// assert_eq!(s.push(1), Some(1));
+/// assert_eq!(s.push(2), Some(2));
+/// assert_eq!(s.push(3), Some(3));
+/// assert_eq!(s.peek_at(0), Some(&3));
+/// assert_eq!(s.peek_at(1), Some(&2));
+/// assert_eq!(s.peek_at(2), Some(&1));
+/// assert_eq!(s.peek_at(3), None);
+/// ```
+/// # Panics
+/// Panics if the stack is empty or if the index is out of bounds.
+/// # Example
+/// ```
+/// let mut s = Stack::new(5);
+/// assert_eq!(s.push(1), Some(1));
+/// assert_eq!(s.push(2), Some(2));
+/// assert_eq!(s.push(3), Some(3));
+/// assert_eq!(s.peek_at(0), Some(&3));
+/// assert_eq!(s.peek_at(1), Some(&2));
+/// assert_eq!(s.peek_at(2), Some(&1));
+/// assert_eq!(s.peek_at(3), None);
+/// ```
 
-
-// peek_at returns the element with the given index from the top of the stack without removing it.
-// peek_at() returns None if the stack is empty or if the index is out of bounds.
 
 
     pub fn peek_at(&self,index:usize) -> Option<&T> {
@@ -113,22 +155,30 @@ impl<T :Copy> Stack <T>{
         Some(&self.arr[index])
     }
     
-    // peek_at example
-    // ---------------------------------
-    //  0 1 2 3 4 5 6 7 8 9
-    //  |1|3|5| | | | | | | |
 
-    // peek_at(0)
-    // returns 1 
-    // peek_at(1)
-    // returns 3
-    // peek_at(2)
-    // returns 5
     
 
- // clear() removes all elements from the stack.
- // clear() returns None if the stack is empty.
- // clear() returns Some(()) if the stack is not empty.
+ /// clear() removes all elements from the stack.
+ /// clear() returns None if the stack is empty.
+ /// clear() returns Some(()) if the stack is not empty.
+ /// # example
+ /// ```
+ /// let mut s = Stack::new(5);
+ /// assert_eq!(s.push(1), Some(1));
+ /// assert_eq!(s.push(2), Some(2));
+ /// assert_eq!(s.push(3), Some(3));
+ /// assert_eq!(s.clear(), Some(()));
+ /// ```
+ /// # Panics
+ /// Panics if the stack is empty.
+ /// # Example
+ /// ```
+ /// let mut s = Stack::new(5);
+ /// assert_eq!(s.push(1), Some(1));
+ /// assert_eq!(s.push(2), Some(2));
+ /// assert_eq!(s.push(3), Some(3));
+ /// assert_eq!(s.clear(), Some(()));
+ /// ```
  
     pub fn clear(&mut self) -> Option<()> {
         if self.arr.is_empty() {
@@ -139,15 +189,72 @@ impl<T :Copy> Stack <T>{
     }
     
 
-// len() returns the number of elements in the stack.
-// len() returns 0 if the stack is empty.
-// len() returns Some(usize) if the stack is not empty.
+/// len() returns the number of elements in the stack.
+/// len() returns 0 if the stack is empty.
+/// len() returns Some(usize) if the stack is not empty.
+/// # example
+/// ```
+/// let mut s = Stack::new(5);
+/// assert_eq!(s.push(1), Some(1));
+/// assert_eq!(s.push(2), Some(2));
+/// assert_eq!(s.push(3), Some(3));
+/// assert_eq!(s.len(), Some(3));
+/// ```
+/// # Panics
+/// Panics if the stack is empty.
+/// # Example
+/// ```
+/// let mut s = Stack::new(5);
+/// assert_eq!(s.push(1), Some(1));
+/// assert_eq!(s.push(2), Some(2));
+/// assert_eq!(s.push(3), Some(3));
+/// assert_eq!(s.len(), Some(3));
+/// ```
 
     pub fn len(&self) -> usize {
         self.arr.len()
     }
    
 
+    /// is_empty() returns true if the stack is empty.
+    /// is_empty() returns false if the stack is not empty.
+    /// # example
+    /// ```
+    /// let mut s = Stack::new(5);
+    /// assert_eq!(s.push(1), Some(1));
+    /// assert_eq!(s.push(2), Some(2));
+    /// assert_eq!(s.push(3), Some(3));
+    /// assert_eq!(s.is_empty(), false);
+    /// ```
+    
+    pub fn is_empty(&self) -> bool {
+        self.arr.is_empty()
+    }
+
+    /// is_full() returns true if the stack is full.
+    /// is_full() returns false if the stack is not full.
+    /// # example
+    /// ```
+    /// let mut s = Stack::new(5);
+    /// assert_eq!(s.push(1), Some(1));
+    /// assert_eq!(s.push(2), Some(2));
+    /// assert_eq!(s.push(3), Some(3));
+    /// assert_eq!(s.is_full(), false);
+    /// ```
+    /// # Panics
+    /// Panics if the stack is empty.
+    /// # Example
+    /// ```
+    /// let mut s = Stack::new(5);
+    /// assert_eq!(s.push(1), Some(1));
+    /// assert_eq!(s.push(2), Some(2));
+    /// assert_eq!(s.push(3), Some(3));
+    /// assert_eq!(s.is_full(), false);
+    /// ```
+    
+    pub fn is_full(&self) -> bool {
+        self.arr.len() == self.size
+    }
 
 }
 
@@ -158,7 +265,7 @@ mod tests {
 
     #[test]
     fn test_new() {
-    let mut list:Stack<u32> =  Stack::new(3);
+    let  list:Stack<u32> =  Stack::new(3);
     assert_eq!(list.len() ,0);
     assert_eq!(list.size ,3);
 
@@ -197,7 +304,7 @@ mod tests {
     list.push(2);
     list.push(3);
     assert_eq!(list.peek().unwrap(),&3);
-    let mut emptylist :Stack<i8> = Stack::new(3);
+    let emptylist :Stack<i8> = Stack::new(3);
     assert_eq!(emptylist.peek(),None);
 
     }
