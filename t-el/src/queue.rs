@@ -1,12 +1,8 @@
-//  Queue implimetation in rust
+// Queue implimetation in rust
 // by (Github) @t-el  on jun 9, 2022
-// Language: rust
+//Language: rust
 // Path: src/queue.rs
 
-// twitter api implimentation in rust
-// by (Github) @t-el  on jun 9, 2022
-// Language: rust
-// Path: src/twitter.rs
 
 
 
@@ -30,12 +26,26 @@ impl<T :Copy> Queue <T>{
             arr : vec![]
         }
     }
-    // enqueue() add  the element from the rear of the queue and returns it.
-    // enqueue() returns None if the queue is full.
-    // enqueue() set the front to 0 if the queue is empty.
-    // enqueue() set the rear to 0 if the queue is empty.
-    // enqueue() increases the rear by 1.
-
+    /// enqueue() add  the element from the rear of the queue and returns it.
+    /// enqueue() returns None if the queue is full.
+    /// # example
+    /// ```
+    /// let mut q = Queue::new(5);
+    /// assert_eq!(q.enqueue(1), Some(1));
+    /// assert_eq!(q.enqueue(2), Some(2));
+    /// assert_eq!(q.enqueue(3), Some(3));
+    /// ```
+    /// # Panics
+    /// Panics if the queue is full.
+    /// # Example
+    /// ```
+    /// let mut q = Queue::new(5);
+    /// assert_eq!(q.enqueue(1), Some(1));
+    /// assert_eq!(q.enqueue(2), Some(2));
+    /// assert_eq!(q.enqueue(3), Some(3));
+    /// assert_eq!(q.enqueue(4), Some(4));
+    /// assert_eq!(q.enqueue(5), None);
+    /// ```
     pub fn enqueue(&mut self,element : T) -> Option<T> {
         if self.arr.len() == self.size {
             return None;
@@ -52,44 +62,32 @@ impl<T :Copy> Queue <T>{
     }
 
 
-  
-   
-    // enqueue example 
-    // front =-1
-    // rear =-1
-    // ---------------------------------
-    //  0 1 2 3 4 5 6 7 8 9
 
-    // enqueue(1)
-    // front =0
-    // rear =1
-    // -----------------------------------
-    //  0 1 2 3 4 5 6 7 8 9
-    //  |1| | | | | | | | |
-
-    // enqueue(3)
-    // front =0
-    // rear =2
-    // ----------------------------------
-    //  0 1 2 3 4 5 6 7 8 9
-    //  |1|3| | | | | | | |
-
-    // enqueue(5)
-    // front =0
-    // rear =3
-    // ----------------------------------
-    //  0 1 2 3 4 5 6 7 8 9
-    //  |1|3|5| | | | | | | |
-    
-
-    
-
-
-    // dequeue() removes the element from the front of the queue and returns it. 
-    // If the queue is empty, it returns None.
-    // dequeue() set the front to -1 if the queue is empty.
-    // dequeue() set the rear to -1 if the queue is empty.
-    // dequeue() increases the front by 1 if the queue is not empty.
+    /// dequeue() removes the element from the front of the queue and returns it.
+    /// dequeue() returns None if the queue is empty.
+    /// # example
+    /// ```
+    /// let mut q = Queue::new(5);
+    /// assert_eq!(q.enqueue(1), Some(1));
+    /// assert_eq!(q.enqueue(2), Some(2));
+    /// assert_eq!(q.enqueue(3), Some(3));
+    /// assert_eq!(q.dequeue(), Some(1));
+    /// assert_eq!(q.dequeue(), Some(2));
+    /// assert_eq!(q.dequeue(), Some(3));
+    /// ```
+    /// # Panics
+    /// Panics if the queue is empty.
+    /// # Example
+    /// ```
+    /// let mut q = Queue::new(5);
+    /// assert_eq!(q.enqueue(1), Some(1));
+    /// assert_eq!(q.enqueue(2), Some(2));
+    /// assert_eq!(q.enqueue(3), Some(3));
+    /// assert_eq!(q.dequeue(), Some(1));
+    /// assert_eq!(q.dequeue(), Some(2));
+    /// assert_eq!(q.dequeue(), Some(3));
+    /// assert_eq!(q.dequeue(), None);
+    /// ```
 
     pub fn dequeue(&mut self) -> Option<T> {
        
@@ -109,9 +107,19 @@ impl<T :Copy> Queue <T>{
         }
     }
 
-    // isFull() returns true if queue is full else false
-    // queue is full when the rear is equal to the size of the queue.
-    // isFull() returns false if the queue is empty.
+    /// isfull() returns true if the queue is full.
+    /// isfull() returns false if the queue is not full.
+    /// # example
+    /// ```
+    /// let mut q = Queue::new(5);
+    /// assert_eq!(q.isfull(), false);
+    /// assert_eq!(q.enqueue(1), Some(1));
+    /// assert_eq!(q.enqueue(2), Some(2));
+    /// assert_eq!(q.enqueue(3), Some(3));
+    /// assert_eq!(q.enqueue(4), Some(4));
+    /// assert_eq!(q.enqueue(5), None);
+    /// assert_eq!(q.isfull(), true);
+    /// ```
 
     pub fn isfull(&self) -> bool {
         if self.arr.len() == self.size {
@@ -120,23 +128,76 @@ impl<T :Copy> Queue <T>{
         false
     }
    
-    
-    
 
-    // queue isEmpty() returns true if queue is empty else false
-    // queue is empty when the front is equal to the rear. 
-    // queue is empty when the front is equal to -1.
-    // queue is empty when the rear is equal to -1.
+  /// is_empty() returns true if the queue is empty.
+    /// is_empty() returns false if the queue is not empty.
+    /// # example
+    /// ```
+    /// let mut q = Queue::new(5);
+    /// assert_eq!(q.is_empty(), true);
+    /// assert_eq!(q.enqueue(1), Some(1));
+    /// assert_eq!(q.enqueue(2), Some(2));
+    /// assert_eq!(q.enqueue(3), Some(3));
+    /// assert_eq!(q.is_empty(), false);
+    /// ```
 
     pub fn isempty(&self) -> bool {
         self.front == self.rear ||  self.front == -1
     }
     
-    
+  
+    /// peek() returns the element at the front of the queue without removing it.
+    /// peek() returns None if the queue is empty.
+    /// # example
+    /// ```
+    /// let mut q = Queue::new(5);
+    /// assert_eq!(q.peek(), None);
+    /// assert_eq!(q.enqueue(1), Some(1));
+    /// assert_eq!(q.enqueue(2), Some(2));
+    /// assert_eq!(q.enqueue(3), Some(3));
+    /// assert_eq!(q.peek(), Some(1));
+    /// ```
+    /// # Panics
+    /// Panics if the queue is empty.
+    /// # Example
+    /// ```
+    /// let mut q = Queue::new(5);
+    /// assert_eq!(q.peek(), None);
+    /// assert_eq!(q.enqueue(1), Some(1));
+    /// assert_eq!(q.enqueue(2), Some(2));
+    /// assert_eq!(q.enqueue(3), Some(3));
+    /// assert_eq!(q.peek(), Some(1));
+    /// ```
+    /// 
+    pub fn peek(&self) -> Option<T> {
+        if self.arr.is_empty() {
+            return None;
+        }
+        Some(self.arr[self.front as usize])
+    }
 
- // clear() removes all elements from the stack.
- // clear() returns None if the stack is empty.
- // clear() returns Some(()) if the stack is not empty.
+    /// capacity() returns the capacity of the queue.
+    /// # example
+    /// ```
+    /// let mut q = Queue::new(5);
+    /// assert_eq!(q.capacity(), 5);
+    /// ```
+    
+    pub fn capacity(&self) -> usize {
+        self.size
+    }
+
+    /// clear() removes all the elements from the queue.
+    /// # example
+    /// ```
+    /// let mut q = Queue::new(5);
+    /// assert_eq!(q.enqueue(1), Some(1));
+    /// assert_eq!(q.enqueue(2), Some(2));
+    /// assert_eq!(q.enqueue(3), Some(3));
+    /// assert_eq!(q.clear(), None);
+    /// ```
+    
+    
     pub fn clear(&mut self) -> Option<()> {
         if self.isempty(){
             None
@@ -148,9 +209,16 @@ impl<T :Copy> Queue <T>{
         }
     }
     
-   // return the length of the queue
-   // if the queue is empty, return 0 
-   // length of array from front to rear
+   /// len() return the length of the queue
+   /// # example
+   /// ```
+   /// let mut q = Queue::new(5);
+   /// assert_eq!(q.len(), 0);
+   /// assert_eq!(q.enqueue(1), Some(1));
+   /// assert_eq!(q.enqueue(2), Some(2));
+   /// assert_eq!(q.enqueue(3), Some(3));
+   /// assert_eq!(q.len(), 3);
+   /// ```
 
     pub fn len(&self) -> usize {
         if self.isempty() {
@@ -162,12 +230,6 @@ impl<T :Copy> Queue <T>{
     }
 }
 
-// implement the iterator trait for the queue struct to iterate over the queue elements in FIFO order. 
-// The iterator should return a reference to the element.
-// The iterator should return None if the queue is empty.
-// make an index variable to keep track of the current element.
-// make a counter variable to keep track of the number of elements in the queue.
-// make a loop to iterate over the queue
 
 
 impl<T : Copy> Iterator for Queue<T> {
@@ -248,6 +310,12 @@ mod tests {
         assert_eq!(list.isfull(),false);    
     }
         
+     
+    #[test]
+    fn test_capacity() {
+    let mut list :Queue<i8> = Queue::new(3);
+    assert_eq!(list.capacity(),3);
+    }
 
     #[test]
     fn test_clear() {
