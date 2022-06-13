@@ -22,8 +22,7 @@ fn main() {
             println!("|{:?}| length : {}", stack.peek_at(i as usize).unwrap(),stack.len());
         }
     }
-  
 
-    
+
     }
   
